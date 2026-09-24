@@ -31,6 +31,38 @@ function normalizeEmail(value: unknown): string | null {
   return email;
 }
 
+function isWaitlistEmailUniqueViolation(error: unknown): boolean {
+  const seen = new Set<unknown>();
+  let current: unknown = error;
+
+  while (current && typeof current === "object" && !seen.has(current)) {
+    seen.add(current);
+    const record = current as Record<string, unknown>;
+
+    if (record.code === "23505" || record.code === 23505) {
+      return true;
+    }
+
+    const constraint = typeof record.constraint === "string" ? record.constraint : "";
+    if (constraint.includes("waitlist_entries_email_unique")) {
+      return true;
+    }
+
+    const message = typeof record.message === "string" ? record.message : "";
+    if (
+      message.includes("23505") ||
+      message.includes("waitlist_entries_email_unique") ||
+      /duplicate key value violates unique constraint/i.test(message)
+    ) {
+      return true;
+    }
+
+    current = record.cause;
+  }
+
+  return false;
+}
+
 const app = new Hono();
 
 app.use(
@@ -97,12 +129,7 @@ app.post("/waitlist", async (c) => {
 
     return c.json({ id: entry.id, email: entry.email }, 201);
   } catch (error) {
-    const pgCode =
-      error && typeof error === "object" && "code" in error
-        ? String((error as { code: unknown }).code)
-        : "";
-
-    if (pgCode === "23505") {
+    if (isWaitlistEmailUniqueViolation(error)) {
       return c.json({ error: "This email is already on the waitlist" }, 409);
     }
 
