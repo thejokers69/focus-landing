@@ -10,3 +10,14 @@ npm run dev
 ```
 
 Build for production: `npm run build` · Preview build: `npm run preview`
+
+## Neon + GitHub
+
+This repo is connected to the Neon project **focus-landing** (`thejokers69/focus-landing`). GitHub Actions uses the Neon integration secrets:
+
+- `NEON_API_KEY` (secret)
+- `NEON_PROJECT_ID` (variable)
+
+On each pull request, [`.github/workflows/neon_workflow.yml`](.github/workflows/neon_workflow.yml) creates a preview branch named `preview/pr-<number>-<git-branch>` and deletes it when the PR closes. View branches in the [Neon Console](https://console.neon.tech).
+
+When you add migrations or tests, run them in the `create_neon_branch` job and set `DATABASE_URL` from `steps.create_neon_branch.outputs.db_url_with_pooler` (do not log that value).
