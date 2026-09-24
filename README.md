@@ -5,11 +5,11 @@ Vite + React landing page for Focus, with shadcn/ui components and a dark/light 
 ## Local setup
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
-Build for production: `npm run build` · Preview build: `npm run preview`
+Build for production: `pnpm run build` · Preview build: `pnpm run preview`
 
 ## Neon + GitHub
 

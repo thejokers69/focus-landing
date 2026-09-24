@@ -51,7 +51,7 @@ jobs:
 
   # Uncomment to run migrations against the preview branch (same job — outputs are job-scoped):
   #      - name: Run migrations
-  #        run: npm run db:migrate
+  #        run: pnpm run db:migrate
   #        env:
   #          DATABASE_URL: ${{ steps.create_neon_branch.outputs.db_url_with_pooler }}
 
