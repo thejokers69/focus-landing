@@ -31,6 +31,7 @@ function normalizeEmail(value: unknown): string | null {
   return email;
 }
 
+
 const app = new Hono();
 
 app.use(
@@ -51,6 +52,7 @@ app.get("/", (c) =>
   c.json({
     ok: true,
     service: "focus-landing-api",
+    version: "waitlist-on-conflict-1",
   }),
 );
 
@@ -90,17 +92,20 @@ app.post("/waitlist", async (c) => {
   const referrer = c.req.header("referer")?.slice(0, 512) ?? null;
 
   try {
+    // onConflictDoNothing avoids relying on pg error.cause, which Neon Functions
+    // may strip when serializing errors across the isolate boundary.
     const [entry] = await db
       .insert(waitlistEntries)
       .values({ email, source, userAgent, referrer })
+      .onConflictDoNothing({ target: waitlistEntries.email })
       .returning({ id: waitlistEntries.id, email: waitlistEntries.email });
 
-    return c.json({ id: entry.id, email: entry.email }, 201);
-  } catch (error) {
-    if (isWaitlistEmailUniqueViolation(error)) {
+    if (!entry) {
       return c.json({ error: "This email is already on the waitlist" }, 409);
     }
 
+    return c.json({ id: entry.id, email: entry.email }, 201);
+  } catch (error) {
     console.error("waitlist insert failed", error);
     return c.json({ error: "Could not join the waitlist. Please try again." }, 500);
   }
