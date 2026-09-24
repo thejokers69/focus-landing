@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react"
+import { WaitlistForm } from "@/components/WaitlistForm"
 
 export function FinalCta() {
   return (
@@ -19,13 +19,12 @@ export function FinalCta() {
           <p className="mx-auto mt-4 max-w-md text-ink-muted">
             Open Focus and start with today's three most important things. The rest can wait.
           </p>
-          <a
-            href="#"
-            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-brand px-6 py-3 text-sm font-medium text-surface transition hover:bg-brand-soft"
-          >
-            Start focusing
-            <ArrowRight className="h-4 w-4" />
-          </a>
+          <WaitlistForm
+            source="final-cta"
+            submitLabel="Start focusing"
+            className="mx-auto mt-8 max-w-md"
+            buttonClassName="px-6 py-3"
+          />
         </div>
       </div>
     </section>

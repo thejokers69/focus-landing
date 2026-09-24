@@ -12,6 +12,7 @@ dist
 .env
 .env.*
 !.env.example
+.neon
 uploads/
 dist-ssr
 *.local
