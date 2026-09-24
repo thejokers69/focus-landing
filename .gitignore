@@ -52,6 +52,8 @@ pip-selfcheck.json
 [Ii]nclude
 [Ll]ib
 [Ll]ib64
+!src/lib/
+!src/lib/**
 [Ll]ocal
 [Ss]cripts
 
