@@ -1,5 +1,7 @@
 import { Check } from "lucide-react"
 
+import { WaitlistForm } from "@/components/WaitlistForm"
+
 export function Pricing() {
   return (
     <section id="pricing" className="px-6 py-20 md:py-28">
@@ -34,12 +36,14 @@ export function Pricing() {
                 ),
               )}
             </ul>
-            <a
-              href="#cta"
-              className="mt-8 flex w-full items-center justify-center rounded-lg border border-border bg-surface px-4 py-2.5 text-sm font-medium text-ink transition hover:bg-surface-hover"
-            >
-              Get started free
-            </a>
+            <WaitlistForm
+              source="pricing-free"
+              submitLabel="Get started free"
+              showIcon={false}
+              className="mt-8"
+              layout="stacked"
+              buttonClassName="w-full border border-border bg-surface text-ink hover:bg-surface-hover"
+            />
           </div>
 
           {/* Pro */}
@@ -68,13 +72,14 @@ export function Pricing() {
                 </li>
               ))}
             </ul>
-            <button
-              type="button"
-              disabled
-              className="mt-8 flex w-full cursor-not-allowed items-center justify-center rounded-lg bg-brand/40 px-4 py-2.5 text-sm font-medium text-surface/80"
-            >
-              Join waitlist
-            </button>
+            <WaitlistForm
+              source="pricing-pro"
+              submitLabel="Join waitlist"
+              showIcon={false}
+              className="mt-8"
+              layout="stacked"
+              buttonClassName="w-full"
+            />
           </div>
         </div>
       </div>

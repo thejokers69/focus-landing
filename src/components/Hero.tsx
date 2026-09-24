@@ -1,4 +1,6 @@
-import { ArrowRight, Check, Circle, Play } from "lucide-react"
+import { Check, Circle, Play } from "lucide-react"
+
+import { WaitlistForm } from "@/components/WaitlistForm"
 
 export function ProductMock() {
   return (
@@ -119,17 +121,11 @@ export function Hero() {
             Tasks, focus sessions, and habits in one calm place. Built for people who want
             clarity—not another noisy dashboard.
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href="#cta"
-              className="inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-surface transition hover:bg-brand-soft"
-            >
-              Start focusing
-              <ArrowRight className="h-4 w-4" />
-            </a>
+          <div className="mt-8 max-w-md">
+            <WaitlistForm source="hero" submitLabel="Start focusing" />
             <a
               href="#features"
-              className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-raised px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-surface-hover"
+              className="mt-3 inline-flex items-center gap-2 rounded-lg border border-border bg-surface-raised px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-surface-hover"
             >
               See the dashboard
             </a>
